@@ -6,7 +6,7 @@ import (
 
 /**
 测试数组
- */
+*/
 func main() {
 	//方式1
 	var nums [3]int

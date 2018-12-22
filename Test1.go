@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 	"unsafe"
 )
 
@@ -11,12 +13,12 @@ var (
 	num2 int
 )
 
-var aa,bb,cc int32 //全局常量可声明不使用
+var aa, bb, cc int32 //全局常量可声明不使用
 
 //枚举
 const (
-	con1=1
-	con2=2
+	con1 = 1
+	con2 = 2
 )
 
 //这是第一go程序
@@ -65,60 +67,81 @@ func main() {
 	fmt.Println(num1, num2)
 
 	//_ 实际上是一个只写变量，你不能得到它的值。这样做是因为 Go 语言中你必须使用所有被声明的变量
-	_,_,res:=add(1,1)
-	fmt.Println("抛弃的：",res)
+	_, _, res := add(1, 1)
+	fmt.Println("抛弃的：", res)
 
 	//常量定义 ,可以不使用
-	const c1,c2,c3 = 1,'c',"string"
-	fmt.Println(c1,c2,c3,len(c3),"sizeOf:",unsafe.Sizeof(c3))
+	const c1, c2, c3 = 1, 'c', "string"
+	fmt.Println(c1, c2, c3, len(c3), "sizeOf:", unsafe.Sizeof(c3))
 
 	//iota使用,行计数器
-	const(
-		i1=iota
+	const (
+		i1 = iota
 		i2
 		i3
 		i4
-		s="---------"
-		i5=iota
+		s  = "---------"
+		i5 = iota
 	)
-	fmt.Println(i1,i2,i3,i4,s,i5)
+	fmt.Println(i1, i2, i3, i4, s, i5)
 
 	//枚举常量示例2
 	const (
-		j1 = 1<<iota
-		j2 = 3<<iota
+		j1 = 1 << iota
+		j2 = 3 << iota
 		j3 //默认同上一个运算方式
 		j4 = iota
 		j5
 	)
-	fmt.Println(j1,j2,j3,j4,j5)
-
+	fmt.Println(j1, j2, j3, j4, j5)
 
 	as := "hello"
-	fmt.Println("hello的sizeOf为",unsafe.Sizeof(as))
-
+	fmt.Println("hello的sizeOf为", unsafe.Sizeof(as))
 
 	var aq int = 4
 	var bq int32
 	var cq float32
 	var ptr *int
 	/* 运算符实例 */
-	fmt.Printf("第 1 行 - a 变量类型为 = %T\n", aq )
+	fmt.Printf("第 1 行 - a 变量类型为 = %T\n", aq)
 	fmt.Printf("第 2 行 - b 变量类型为 = %T\n", bq)
-	fmt.Printf("第 3 行 - c 变量类型为 = %T\n", cq )
+	fmt.Printf("第 3 行 - c 变量类型为 = %T\n", cq)
 
 	/*  & 和 * 运算符实例 */
-	ptr = &a    /* 'ptr' 包含了 'a' 变量的地址 */
-	fmt.Printf("a 的值为  %d\n", a);
-	fmt.Printf("*ptr 为 %d\n", *ptr);
+	ptr = &a /* 'ptr' 包含了 'a' 变量的地址 */
+	fmt.Printf("a 的值为  %d\n", a)
+	fmt.Printf("*ptr 为 %d\n", *ptr)
 
 	//for循环写法
 	for i = 0; i < 10; i++ {
 		fmt.Print(i)
 	}
+	fmt.Println()
+
+	fmt.Println("=-======随机数 随机种子=======>>")
+	rand.Seed(time.Now().Unix())
+	x := rand.Intn(10)
+	fmt.Println(x)
+
+
+	fmt.Println("测试空接口：相当于超类object")
+	var nilInf interface{}
+	fmt.Println(nilInf)
+
+	fmt.Println("测试defer：")
+	//好骚气的操作
+	func(s string){
+		//最后的收尾操作 类似于析构函数或者finally操作
+		defer fmt.Println(s)
+
+		fmt.Println("before~")
+		fmt.Println("operation~")
+		fmt.Println("after~")
+
+	}("I am finally!")
 }
 
 //定义有多个返回值的函数
-func add(n1 int, n2 int) (int, int, int) {
-	return n1,n2,n1+n2
+func add(n1 ,n2 int) (a,b,c int) {
+	return n1, n2, n1 + n2
 }

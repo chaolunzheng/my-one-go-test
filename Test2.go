@@ -104,16 +104,15 @@ func main() {
 	}
 	fmt.Println()
 	for m := 2; m < 100; m++ {
-		for n := 2; n<=m; n++ {
+		for n := 2; n <= m; n++ {
 			if m%n == 0 {
-				if n<m{
+				if n < m {
 					break
-				}else{
-					fmt.Print(" ",m)
+				} else {
+					fmt.Print(" ", m)
 				}
 			}
 		}
 	}
-
 
 }
